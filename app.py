@@ -38,14 +38,13 @@ pd_deaths = reproject(pd_deaths)
 pd_pumps = reproject(pd_pumps)
 
 # -----------------------------------------
-# 4. SUMMARY STATISTICS (UPDATED)
+# 4. SUMMARY STATISTICS
 # -----------------------------------------
 # Total deaths based on 'Count' column
 total_deaths = pd_deaths["Count"].sum()
 
-# Maximum deaths at one location (group by X,Y and sum Count if multiple points overlap)
-death_counts = pd_deaths.groupby(["X", "Y"])["Count"].sum()
-max_death_same_location = death_counts.max()
+# Maximum deaths at a single location (highest value in Count column)
+max_death_same_location = pd_deaths["Count"].max()
 
 st.metric("Total Cholera Deaths", int(total_deaths))
 st.metric("Maximum Deaths at One Location", int(max_death_same_location))
@@ -136,4 +135,5 @@ m.get_root().add_child(macro)
 # -----------------------------------------
 st.subheader("Interactive Cholera Map")
 st_folium(m, width=1000, height=600)
+
 
